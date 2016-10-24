@@ -25,7 +25,7 @@ $(function() {
 			info: true,
 			autoWidth: false,
 			language: {
-				url: '/nave1839/www/app/js/lang/dataTable.js'
+				url: '/js/lang/dataTable.js'
 			}
 		};
 		var columnaPorDefecto = $this.find('th.js-dataTable-ordenar').index();
