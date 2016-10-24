@@ -43,7 +43,11 @@
 
 		      	<?= $form->field($socio, 'apellidos')->textInput(); ?>	      	    
 
-		      	<?= $form->field($socio, 'dni')->textInput(); ?>	      	    		      	
+		      	<?= $form->field($socio, 'dni')->textInput(); ?>
+
+		      	<?= $form->field($socio, 'nombreUsuario')->textInput(); ?>	      	    
+
+		      	<?= $form->field($socio, 'password')->passwordInput()->label(\Yii::t('app', 'Nueva contraseña')); ?>	      	     	      	    		      	
 
 		      </div>
 		      <!-- /.box-body -->		        

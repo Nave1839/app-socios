@@ -67,6 +67,18 @@ $accion = $this->context->action->id;
               <span class="sr-only">Toggle navigation</span>
             </a>
             <div class="navbar-custom-menu">
+              <?php
+                  echo Nav::widget([
+                      'options' => ['class' => 'nav navbar-nav'],
+                      'items' => [
+                          [
+                              'label' => \Yii::t('app', 'Salir ({usuario})', ['usuario' => Yii::$app->user->identity->nombreCompleto]),
+                              'url' => ['/site/logout'],
+                              'linkOptions' => ['data-method' => 'post']
+                          ],
+                      ],
+                  ]);
+              ?>
             </div>
         </nav>
 
