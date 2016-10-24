@@ -11,4 +11,7 @@ server('prod', '188.166.174.54', 22)
     ->env('branch', 'master')
     ->env('deploy_path', '/var/www/app.nave1839.org/www');
 
+localServer('local')
+    ->stage('local');
+
 set('repository', 'git@bitbucket.org:edupoch/app.nave1839.org.git');
