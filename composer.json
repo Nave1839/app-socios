@@ -18,7 +18,11 @@
         "yiisoft/yii2": "~2.0.5",
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
-        "deployer/deployer": "^3.3"
+        "deployer/deployer": "^3.3",
+        "almasaeed2010/adminlte": "^2.3",
+        "kartik-v/yii2-widgets": "^3.4",
+        "kartik-v/yii2-datecontrol": "^1.9",
+        "fortawesome/font-awesome": "^4.6"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

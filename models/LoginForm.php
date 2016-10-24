@@ -7,9 +7,6 @@ use yii\base\Model;
 
 /**
  * LoginForm is the model behind the login form.
- *
- * @property User|null $user This property is read-only.
- *
  */
 class LoginForm extends Model
 {
@@ -35,6 +32,14 @@ class LoginForm extends Model
         ];
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'username' => \Yii::t('app', 'Email'),
+            'password' => \Yii::t('app', 'Contraseña'),
+        ];
+    }
+
     /**
      * Validates the password.
      * This method serves as the inline validation for password.
@@ -48,14 +53,14 @@ class LoginForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, \Yii::t('app', 'El usuario o la contraseña no son correctos'));
             }
         }
     }
 
     /**
      * Logs in a user using the provided username and password.
-     * @return bool whether the user is logged in successfully
+     * @return boolean whether the user is logged in successfully
      */
     public function login()
     {
@@ -73,7 +78,7 @@ class LoginForm extends Model
     public function getUser()
     {
         if ($this->_user === false) {
-            $this->_user = User::findByUsername($this->username);
+            $this->_user = Socio::findByUsername($this->username);
         }
 
         return $this->_user;

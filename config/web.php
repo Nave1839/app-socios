@@ -8,14 +8,13 @@ $config = [
     'bootstrap' => ['log'],
     'components' => [
         'request' => [
-            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '-XYGImbstNnmoW1BuQTTxq_NADiy3w3v',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\models\Socio',
             'enableAutoLogin' => true,
         ],
         'authManager' => [
@@ -31,6 +30,44 @@ $config = [
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
+        'urlManager' => [
+            'class' => 'yii\web\UrlManager',
+            // Disable index.php
+            'showScriptName' => false,
+            // Disable r= routes
+            'enablePrettyUrl' => true,
+            // 'enableStrictParsing' => true,
+            'rules' => array(
+                '<controller:[\w\-]+>/<id:\d+>' => '<controller>/view',
+                '<controller:[\w\-]+>/<action:[\w\-]+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:[\w\-]+>/<action:[\w\-]+>' => '<controller>/<action>',
+            ),
+        ],
+        'formatter' => [
+            'locale' => 'gl-ES',
+            'class' => 'yii\i18n\Formatter',
+            'dateFormat' => 'php:d/m/Y',
+            'datetimeFormat' => 'php:Y-m-d H:i:s',
+            'timeFormat' => 'php:H:i:s',
+        ],
+        'i18n' => [
+            'translations' => [
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'fileMap' => [
+                        'app' => 'app.php',
+                    ],                    
+                ],
+                'yii' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'sourceLanguage' => 'en-US',
+                    'basePath' => '@app/messages'
+                ],
+            ],
+        ],
+        'passwordHash' => [ 
+            'class' => 'app\components\PasswordHash', 
+        ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -41,14 +78,6 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
-        ],
-        */
     ],
     'params' => $params,
 ];
