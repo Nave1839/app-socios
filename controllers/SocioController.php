@@ -4,7 +4,9 @@ namespace app\controllers;
 
 use yii\base\UserException;
 use yii\filters\AccessControl;
+use yii\web\UploadedFile;
 use app\models\Socio;
+use app\models\ImportarSociosForm;
 use \yii\helpers\Html;
 
 class SocioController extends \yii\web\Controller
@@ -155,6 +157,27 @@ class SocioController extends \yii\web\Controller
     	$socios = [];
 
         return $this->render('index', ['socios' => $socios]);
+    }
+
+    public function actionImportar()
+    {
+        $importacion = new ImportarSociosForm();
+
+        if (\Yii::$app->request->isPost) {
+            $importacion->fichero = UploadedFile::getInstance($importacion, 'fichero');
+            if ($importacion->subir()) {
+
+                $datos = \moonland\phpexcel\Excel::import($importacion->ruta, [
+                    'setFirstRecordAsKeys' => true,
+                ]);
+
+                \Yii::$app->session->setFlash('ok', \Yii::t('app', 'Los socios se han importado correctamente'));
+                
+                return $this->redirect(['index']);
+            }
+        }
+
+        return $this->render('importar', ['importacion' => $importacion]);
     }
 
     public function actionExportar()
