@@ -113,6 +113,52 @@ class SocioController extends \yii\web\Controller
         return $this->formulario($socio);
     }
 
+    public function actionActualizar($id = null)
+    {
+        $resultado = [];
+
+        if ($id) {
+            $socio = $this->comprobar($id);
+        } else {
+            $socio = new Socio;
+        }
+
+        if ($socio->load(\Yii::$app->request->post())){
+            $transaction = Socio::getDb()->beginTransaction();
+            try {
+                if ($socio->isNewRecord) {
+                    $socio->fechaAlta = \Yii::$app->formatter->asDatetime(new \DateTime);
+                }
+                
+                if ($socio->save()) {
+                    $resultado = [
+                        'estado' => 'ok',
+                        'mensaje' => sprintf( \Yii::t('app', 'Ok: Socio %d guardado'), $socio->id ),
+                        'id' => $socio->id
+                    ];
+                    $transaction->commit();
+                } else {
+                    $errores = $socio->getErrors();
+                    $error = array_shift($errores);
+
+                    $resultado = [
+                        'estado' => 'error',
+                        'mensaje' => sprintf( \Yii::t('app', 'Error: %s'), $error[0]),
+                    ];
+                    $transaction->rollBack();
+                }
+            } catch(\Exception $e) {         
+                $resultado = [
+                    'estado' => 'error',
+                    'mensaje' => \Yii::t('app', 'Error en el servidor')
+                ];
+                $transaction->rollBack();
+            }
+        }
+
+        echo json_encode($resultado);
+    }
+
     public function actionGuardar($id)
     {
         $socio = $this->comprobar($id);
@@ -188,6 +234,11 @@ class SocioController extends \yii\web\Controller
         //     'models' => $socios, 
         //     'columns' => ['nombre', 'apellidos']
         // ]);
+    }
+
+    public function actionMultiple()
+    {
+        return $this->render('multiple');
     }
 
     public function actionApi()

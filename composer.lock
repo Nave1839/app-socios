@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2a45c183f9f1565b60377803f6c38f6b",
-    "content-hash": "54716d79615f9501fc8cba1d18f0b71d",
+    "hash": "671e20c7e15a1e11c54043aa29636864",
+    "content-hash": "6ea6f1d7bbdc3041b82b26af47b30ea3",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -97,6 +97,61 @@
             ]
         },
         {
+            "name": "bower-asset/handsontable",
+            "version": "0.29.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/handsontable/handsontable.git",
+                "reference": "f52419f500b11241c3c0d97a5bfa5574cc0e0006"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/handsontable/handsontable/zipball/f52419f500b11241c3c0d97a5bfa5574cc0e0006",
+                "reference": "f52419f500b11241c3c0d97a5bfa5574cc0e0006",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/moment": ">=2.13.0,<3.0.0",
+                "bower-asset/numbro": ">=1.8.0,<2.0.0",
+                "bower-asset/pikaday": ">=1.4.0,<2.0.0",
+                "bower-asset/zeroclipboard": ">=2.2.0,<3.0.0"
+            },
+            "require-dev": {
+                "bower-asset/chroma-js": "~0.5.6"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "./dist/handsontable.js",
+                    "./dist/handsontable.css"
+                ],
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "components",
+                    "demo",
+                    "node_modules",
+                    "src",
+                    "test"
+                ]
+            },
+            "description": "Spreadsheet-like data grid editor that provides copy/paste functionality compatible with Excel/Google Docs",
+            "keywords": [
+                "data",
+                "data-grid",
+                "data-spreadsheet",
+                "data-table",
+                "edit-cell",
+                "editable-table",
+                "editor",
+                "excel",
+                "grid",
+                "grid-editor",
+                "spreadsheet",
+                "table",
+                "tabular-data"
+            ]
+        },
+        {
             "name": "bower-asset/jquery",
             "version": "2.2.4",
             "source": {
@@ -174,6 +229,114 @@
             ]
         },
         {
+            "name": "bower-asset/moment",
+            "version": "2.17.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/moment/moment.git",
+                "reference": "4710a7935cb347d8b2cf50f5befccfea8180619d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/moment/moment/zipball/4710a7935cb347d8b2cf50f5befccfea8180619d",
+                "reference": "4710a7935cb347d8b2cf50f5befccfea8180619d",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "moment.js",
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "benchmarks",
+                    "bower_components",
+                    "meteor",
+                    "node_modules",
+                    "scripts",
+                    "tasks",
+                    "test",
+                    "component.json",
+                    "composer.json",
+                    "CONTRIBUTING.md",
+                    "ender.js",
+                    "Gruntfile.js",
+                    "Moment.js.nuspec",
+                    "package.js",
+                    "package.json",
+                    "ISSUE_TEMPLATE.md",
+                    "typing-tests"
+                ]
+            },
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "bower-asset/numbro",
+            "version": "1.9.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/foretagsplatsen/numbro.git",
+                "reference": "b2c22217448d714f1548a55cedab6ba546bfae1c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/foretagsplatsen/numbro/zipball/b2c22217448d714f1548a55cedab6ba546bfae1c",
+                "reference": "b2c22217448d714f1548a55cedab6ba546bfae1c",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "numbro.js"
+            },
+            "description": "Format and manipulate numbers.",
+            "keywords": [
+                "format",
+                "money",
+                "number",
+                "numbro",
+                "numeral",
+                "percentage",
+                "time"
+            ]
+        },
+        {
+            "name": "bower-asset/pikaday",
+            "version": "1.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dbushell/Pikaday.git",
+                "reference": "5f15c0e454035dd074f3477dd65e2790faa24ee5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dbushell/Pikaday/zipball/5f15c0e454035dd074f3477dd65e2790faa24ee5",
+                "reference": "5f15c0e454035dd074f3477dd65e2790faa24ee5",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "./pikaday.js",
+                    "./css/pikaday.css"
+                ],
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "node_modules",
+                    "components"
+                ]
+            },
+            "license": [
+                "BSD",
+                "MIT"
+            ],
+            "description": "A refreshing JavaScript Datepicker — lightweight, no dependencies, modular CSS",
+            "keywords": [
+                "calendar",
+                "date",
+                "datepicker"
+            ]
+        },
+        {
             "name": "bower-asset/punycode",
             "version": "v1.3.2",
             "source": {
@@ -233,6 +396,48 @@
             },
             "license": [
                 "MIT"
+            ]
+        },
+        {
+            "name": "bower-asset/zeroclipboard",
+            "version": "v2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zeroclipboard/zeroclipboard.git",
+                "reference": "039fb799c916d3730fbc898c2f5ef24581c7e9b7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zeroclipboard/zeroclipboard/zipball/039fb799c916d3730fbc898c2f5ef24581c7e9b7",
+                "reference": "039fb799c916d3730fbc898c2f5ef24581c7e9b7",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "dist/ZeroClipboard.js",
+                    "dist/ZeroClipboard.swf"
+                ],
+                "bower-asset-ignore": [
+                    "*",
+                    "/dist/.jshintrc",
+                    "!/bower.json",
+                    "!/dist/**"
+                ]
+            },
+            "license": [
+                "https://github.com/zeroclipboard/zeroclipboard/blob/master/LICENSE"
+            ],
+            "description": "The ZeroClipboard library provides an easy way to copy text to the clipboard using an invisible Adobe Flash movie and a JavaScript interface.",
+            "keywords": [
+                "clip",
+                "clipboard",
+                "clippy",
+                "copy",
+                "cut",
+                "flash",
+                "paste",
+                "zclip"
             ]
         },
         {

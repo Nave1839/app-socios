@@ -32,6 +32,9 @@ $config = [
             // for the mailer to send real emails.
             'useFileTransport' => true,
         ],
+        'assetManager' => [
+            'appendTimestamp' => true,
+        ],
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
             // Disable index.php

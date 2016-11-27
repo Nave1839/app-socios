@@ -29,5 +29,6 @@ class AppAsset extends AssetBundle
         'yii\bootstrap\BootstrapPluginAsset',
         '\app\assets\FontAwesomeAsset', 
         '\app\assets\AdminLTEAsset', 
+        '\app\assets\HandsontableAsset',
     ];
 }
