@@ -60,6 +60,12 @@ $(function() {
 		$this.select2(opciones);
 	});
 
+	/*
+	 * Hansontables
+	 */
+
+	// Colorea las celdas de la columna con los mensajes del servidor, 
+	// en función de si se trata de una operación correcta o un error
 	function mensajeDeServidorRenderer(instance, td, row, col, prop, value, cellProperties) {
 		Handsontable.renderers.TextRenderer.apply(this, arguments);
 
@@ -82,33 +88,43 @@ $(function() {
 
 	$('.js-handsontable').each(function() {
 
-		var data = [
-			['','','','']
-		];
+		var $this = $(this);
+		// Los metadatos de la hoja se guardan como atributos HTML del contenedor
+		var _columnas = $this.data('columnas');
+		// Url en la que se guardan los datos de la hoja
+		var _url = $this.data('url');
+		// Columna que muestra los mensajes del servidor
+		var _columnaServidor = parseInt($this.data('columna-servidor'), 10);
+
+		var _atributos = $.map(_columnas, function (col, i) {
+			return col.atributo;
+		});
+
+		var _mensajeGuardando = $this.data('mensaje-guardando');
+		var _mensajeErrorServidor = $this.data('mensaje-error-servidor');
 
 		var ultimaFila = 0;
 		var hayCambios = false;
 
 		var hot = new Handsontable(this, {
-			data: data,
 			minSpareRows: 1,
 			rowHeaders: true,
-			colHeaders: [
-				'Nome',
-				'Apelidos',
-				'DNI',
-				'Mensaxe'
-			],
-			columns: [
-				{},
-				{},
-				{},
-				{
-					readOnly: true
+			colHeaders: $.map(_columnas, function (col, i) {
+				return col.nombre;
+			}),
+			columns: $.map(_columnas, function (col, i) {
+				var prop = {};
+
+				if (i == _columnaServidor) {
+					prop.readOnly = true;
 				}
-			],
+
+				return prop;
+			}),
 			autoWrapRow: true,
 			colWidths: 200,
+			// Al movermos con el tabulador nos saltamos las columnas
+			// que sean de solo lectura
 			tabMoves: function(e){
 				
 				var seleccion = hot.getSelected();
@@ -126,43 +142,52 @@ $(function() {
 				
 				return {row: filaDelta, col: colDelta};
 			},
+			// Detecta cuando ha habido cambios en una fila
 			afterChange: function(cambios, tipo) {
 				if (cambios && tipo == 'edit') {
 					hayCambios = true;
 				}
 			},
+			// Cuando cambiamos de fila, envía los nuevos datos
+			// al servidor y recibe su respuesta
 			afterSelectionEnd: function(fila) {
 				if (hayCambios && ultimaFila != fila) {
 					var filaActual = ultimaFila;
-					var meta = hot.getCellMeta(filaActual, 3);
-					var url = '/socio/actualizar';
+					var meta = hot.getCellMeta(filaActual, _columnaServidor);
+					var url = _url;
+					var datos = {};
 
-					hot.setCellMeta(filaActual, 3, 'estado', '');
-					hot.setDataAtCell(filaActual, 3, 'Guardando...', 'loadData');
+					hot.setCellMeta(filaActual, _columnaServidor, 'estado', '');
+					hot.setDataAtCell(filaActual, _columnaServidor, _mensajeGuardando, 'loadData');
 
-					console.log(meta);
-
+					// Si la fila está asociada a una entidad,
+					// actualizamos la url
 					if (meta.id) {
 						url = url + '/' + meta.id;
 					}
 
+					// Guardamos los datos a enviar, asociándolos
+					// con los nombres de los atributos
+					$.each(_atributos, function(i, valor) {
+						if (!!valor) {
+							datos[valor] = hot.getDataAtCell(filaActual, i);
+						}
+					});
+
 					$.post(url,
-						{
-							'Socio[nombre]': hot.getDataAtCell(filaActual, 0),
-							'Socio[apellidos]':hot.getDataAtCell(filaActual, 1),
-							'Socio[dni]': hot.getDataAtCell(filaActual, 2),
-						},
+						datos,
 						function(resultado) {
-							hot.setCellMeta(filaActual, 3, 'estado', resultado.estado);
+							hot.setCellMeta(filaActual, _columnaServidor, 'estado', resultado.estado);
 							if (resultado.id) {
-								hot.setCellMeta(filaActual, 3, 'id', resultado.id);
+								hot.setCellMeta(filaActual, _columnaServidor, 'id', resultado.id);
 							}
-							hot.setDataAtCell(filaActual, 3, resultado.mensaje, 'loadData');
+							hot.setDataAtCell(filaActual, _columnaServidor, resultado.mensaje, 'loadData');
 						},
 						'json'
 					).fail(function () {
-						hot.setCellMeta(filaActual, 3, 'estado', 'error');
-						hot.setDataAtCell(filaActual, 3, 'Error en el servidor', 'loadData');
+						// Error de servidor
+						hot.setCellMeta(filaActual, _columnaServidor, 'estado', 'error');
+						hot.setDataAtCell(filaActual, _columnaServidor, _mensajeErrorServidor, 'loadData');
 					});
 				}
 				
@@ -172,7 +197,7 @@ $(function() {
 			cells: function (row, col, prop) {
 				var cellProperties = {};
 				
-				if (col == 3) {
+				if (col == _columnaServidor) {
 					cellProperties.renderer = 'mensajeDeServidorRenderer';
 				}
 
