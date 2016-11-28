@@ -17,6 +17,10 @@
 			'atributo' => 'Socio[dni]'
 		],
 		[
+			'nombre' => \Yii::t('app', 'Email'),
+			'atributo' => 'Socio[email]'
+		],
+		[
 			'nombre' => \Yii::t('app', 'Mensaje')
 		]
 	];
@@ -30,7 +34,7 @@
 		    <div class="handsontable js-handsontable" 
 		    	data-columnas='<?= json_encode($columnas) ?>'
 		    	data-url="<?= Url::to('/socio/actualizar') ?>"
-		    	data-columna-servidor="3"
+		    	data-columna-servidor="4"
 		    	data-mensaje-guardando="<?= \Yii::t('app', 'Guardando...') ?>"
 		    	data-mensaje-error-servidor="<?= \Yii::t('app', 'Error en el servidor'); ?>"
 		    ></div>

@@ -41,6 +41,7 @@ class Socio extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['dni', 'email', 'nombreUsuario'], 'string', 'max' => 64],
             [['nombreUsuario'], 'match', 'pattern' => '/^[a-z]\w*$/i', 'message' => 'El nombre de usuario no tiene un formato válido'],
             [['dni'], 'unique'],
+            [['email'], 'email'],
             [['email'], 'unique'],
             [['nombreUsuario', 'id'], 'unique']
         ];

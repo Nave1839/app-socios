@@ -176,9 +176,10 @@ $(function() {
 
 					// Guardamos los datos a enviar, asociándolos
 					// con los nombres de los atributos
-					$.each(_atributos, function(i, valor) {
-						if (!!valor) {
-							datos[valor] = hot.getDataAtCell(filaActual, i);
+					$.each(_atributos, function(i, nombre) {
+						var valor = hot.getDataAtCell(filaActual, i);
+						if (!!nombre && !!valor) {
+							datos[nombre] = valor;
 						}
 					});
 
@@ -197,10 +198,11 @@ $(function() {
 						hot.setCellMeta(filaActual, _columnaServidor, 'estado', 'error');
 						hot.setDataAtCell(filaActual, _columnaServidor, _mensajeErrorServidor, 'loadData');
 					});
+
+					hayCambios = false;
 				}
 				
 				ultimaFila = fila;
-				hayCambios = false;
 			},
 			cells: function (row, col, prop) {
 				var cellProperties = {};

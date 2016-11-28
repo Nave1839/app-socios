@@ -152,7 +152,7 @@ class SocioController extends \yii\web\Controller
             } catch(\Exception $e) {         
                 $resultado = [
                     'estado' => 'error',
-                    'mensaje' => \Yii::t('app', 'Error en el servidor')
+                    'mensaje' => \Yii::t('app', 'Error en el servidor') . ': ' . $e->getMessage()
                 ];
                 $transaction->rollBack();
             }
