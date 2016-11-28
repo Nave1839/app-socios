@@ -96,8 +96,9 @@ $accion = $this->context->action->id;
             </a>
             <ul class="treeview-menu">
               <li class="<?= $controlador == 'socio' && $accion == 'index' ? 'active' : '' ?>" ><a href="<?= Url::to(['socio/index']) ?>"><i class="fa fa-circle-o"></i> <?= \Yii::t('app', 'Todos'); ?></a></li>
-              <li class="<?= $controlador == 'socio' && $accion == 'nuevo' ? 'active' : '' ?>" ><a href="<?= Url::to(['socio/nuevo']) ?>"><i class="fa fa-plus"></i> <?= \Yii::t('app', 'Nuevo'); ?></a></li>
-              <li class="<?= $controlador == 'socio' && $accion == 'importar' ? 'active' : '' ?>" ><a href="<?= Url::to(['socio/importar']) ?>"><i class="fa fa-plus"></i> <?= \Yii::t('app', 'Importar'); ?></a></li>
+              <li class="<?= $controlador == 'socio' && $accion == 'nuevo' ? 'active' : '' ?>" ><a href="<?= Url::to(['socio/nuevo']) ?>"><i class="fa fa-plus"></i> <?= \Yii::t('app', 'Crear 1'); ?></a></li>
+              <li class="<?= $controlador == 'socio' && $accion == 'multiple' ? 'active' : '' ?>" ><a href="<?= Url::to(['socio/multiple']) ?>"><i class="fa fa-table"></i> <?= \Yii::t('app', 'Crear más de 1'); ?></a></li>
+              <li class="<?= $controlador == 'socio' && $accion == 'importar' ? 'active' : '' ?>" ><a href="<?= Url::to(['socio/importar']) ?>"><i class="fa fa-upload"></i> <?= \Yii::t('app', 'Importar'); ?></a></li>
             </ul>
           </li>        
         </ul>

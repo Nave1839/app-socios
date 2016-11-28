@@ -119,8 +119,10 @@ class SocioController extends \yii\web\Controller
 
         if ($id) {
             $socio = $this->comprobar($id);
+            $mensaje = \Yii::t('app', 'Socio %d actualizado');
         } else {
             $socio = new Socio;
+            $mensaje = \Yii::t('app', 'Socio %d creado');
         }
 
         if ($socio->load(\Yii::$app->request->post())){
@@ -133,7 +135,7 @@ class SocioController extends \yii\web\Controller
                 if ($socio->save()) {
                     $resultado = [
                         'estado' => 'ok',
-                        'mensaje' => sprintf( \Yii::t('app', 'Ok: Socio %d guardado'), $socio->id ),
+                        'mensaje' => sprintf( $mensaje, $socio->id ),
                         'id' => $socio->id
                     ];
                     $transaction->commit();

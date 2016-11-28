@@ -107,7 +107,10 @@ $(function() {
 		var hayCambios = false;
 
 		var hot = new Handsontable(this, {
+			minRows: 20,
 			minSpareRows: 1,
+			autoWrapRow: true,
+			stretchH: 'all',
 			rowHeaders: true,
 			colHeaders: $.map(_columnas, function (col, i) {
 				return col.nombre;
@@ -121,8 +124,13 @@ $(function() {
 
 				return prop;
 			}),
-			autoWrapRow: true,
-			colWidths: 200,
+			colWidths: $.map(_columnas, function (col, i) {
+				if (i == _columnaServidor) {
+					return 200;
+				}
+
+				return 150;
+			}),
 			// Al movermos con el tabulador nos saltamos las columnas
 			// que sean de solo lectura
 			tabMoves: function(e){
