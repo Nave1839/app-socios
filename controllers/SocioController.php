@@ -118,24 +118,44 @@ class SocioController extends \yii\web\Controller
         $resultado = [];
 
         if ($id) {
-            $socio = $this->comprobar($id);
-            $mensaje = \Yii::t('app', 'Socio %d actualizado');
+            $socio = $this->comprobar($id);            
         } else {
-            $socio = new Socio;
-            $mensaje = \Yii::t('app', 'Socio %d creado');
+            $socio = new Socio;            
         }
 
         if ($socio->load(\Yii::$app->request->post())){
             $transaction = Socio::getDb()->beginTransaction();
             try {
-                if ($socio->isNewRecord) {
+                $esNuevo = $socio->isNewRecord;
+
+                if ($esNuevo) {
                     $socio->fechaAlta = \Yii::$app->formatter->asDatetime(new \DateTime);
                 }
                 
                 if ($socio->save()) {
+
+                    if ($socio->esCorrectaLetraDni()) {
+                        $estado = 'ok';
+
+                        if ($esNuevo) {
+                            $mensaje = sprintf(\Yii::t('app', 'Socio %d creado'), $socio->id);
+                        } else {
+                            $mensaje = sprintf(\Yii::t('app', 'Socio %d actualizado'), $socio->id);
+                        }
+                    } else {
+                        $estado = 'warning';
+                        $letra = $socio->letraDniCorrecta;
+
+                        if ($esNuevo) {
+                            $mensaje = sprintf(\Yii::t('app', 'Socio %d creado pero la letra del DNI debería ser la %s'), $socio->id, $letra);
+                        } else {
+                            $mensaje = sprintf(\Yii::t('app', 'Socio %d actualizado pero la letra del DNI debería ser la %s'), $socio->id, $letra);
+                        }
+                    }
+
                     $resultado = [
-                        'estado' => 'ok',
-                        'mensaje' => sprintf( $mensaje, $socio->id ),
+                        'estado' => $estado,
+                        'mensaje' => $mensaje,
                         'id' => $socio->id
                     ];
                     $transaction->commit();

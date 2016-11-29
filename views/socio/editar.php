@@ -21,21 +21,17 @@
 		  <!-- Horizontal Form -->
 		  <div class="box box-info">
 		    <!-- form start -->
-		    <?php 
-		    	if (!$esNuevo) :
-		    		$fecha = \Yii::$app->formatter->asDate($socio->fechaAlta);		    		
-		    ?>
-		    	<div class="box-header with-border">
-		    		<h3 class="box-title"><?= sprintf(\Yii::t('app', 'Socio #%s desde el %s'), $socio->id, $fecha); ?></h3>
-		    	</div>
-		    <?php 
-		    	endif;
-		    ?>
+		    <div class="box-header with-border">
+		    	<h3 class="box-title"><?= \Yii::t('app', 'Datos del socio'); ?></h3>
+		    </div>
 		      <div class="box-body">
 
 		      	<?php 
 		      		if (!$esNuevo) {
 		      			echo $form->field($socio, 'id')->textInput();
+
+		      			$socio->fechaAlta = \Yii::$app->formatter->asDate($socio->fechaAlta);
+		      			echo $form->field($socio, 'fechaAlta')->staticControl();
 		      		}
 		      	?>
 
@@ -45,9 +41,20 @@
 
 		      	<?= $form->field($socio, 'dni')->textInput(); ?>
 
-		      	<?= $form->field($socio, 'nombreUsuario')->textInput(); ?>	      	    
+  		      	<?php 
+  		      		if (!$socio->esCorrectaLetraDni()) :
+  		      			$letra = $socio->letraDniCorrecta;
+  		      	?>	      	
+  		      		<div class="form-group has-warning">
+  	                	<span class="help-block"><?= \Yii::t('app', 'La letra del DNI debería ser {letra}', ['letra' => $letra]); ?></span>
+  	                </div>    		      	
+  		      	<?php 
+  		      		endif;
+  		      	?>
 
-		      	<?= $form->field($socio, 'password')->passwordInput()->label(\Yii::t('app', 'Nueva contraseña')); ?>	      	     	      	    		      	
+		      	<?= $form->field($socio, 'email')->textInput(); ?>
+
+		      	<?= $form->field($socio, 'notas')->textArea(['rows' => 12]); ?>
 
 		      </div>
 		      <!-- /.box-body -->		        
@@ -62,9 +69,16 @@
 		  <!-- Horizontal Form -->
 		  <div class="box box-info">
 		    <!-- form start -->
+		    <div class="box-header with-border">
+		    	<h3 class="box-title"><?= \Yii::t('app', 'Datos de acceso a la aplicación'); ?></h3>
+		    </div>
 			<div class="box-body">
 
-				<?= $form->field($socio, 'notas')->textArea(['rows' => 12]); ?>	      	          	    
+				<?= $form->field($socio, 'nombreUsuario')->textInput(); ?>	      	    
+
+				<?= $form->field($socio, 'password')->passwordInput()->label(\Yii::t('app', 'Nueva contraseña')); ?>
+
+				
 
 			</div>		       
 		  </div>

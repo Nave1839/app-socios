@@ -187,4 +187,26 @@ class Socio extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
         return \Yii::$app->passwordHash->validate_password($password, $this->password);
     }
+
+    public function getLetraDniCorrecta()
+    {
+        if (!$this->dni) {
+            return '';
+        }
+
+        $dni = intval($this->dni);
+        return substr('TRWAGMYFPDXBNJZSQVHLCKE', $dni % 23, 1);
+    }
+
+    public function esCorrectaLetraDni()
+    {
+        if (!$this->dni) {
+            return true;
+        }
+
+        $dni = intval($this->dni);
+        $dni .= $this->letraDniCorrecta;
+
+        return strcmp($this->dni, $dni) == 0;
+    }
 }

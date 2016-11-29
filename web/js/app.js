@@ -72,12 +72,17 @@ $(function() {
 		var clase = 'text-muted';
 
 		if (cellProperties) {
-			if (cellProperties.estado == 'ok') {
-				clase = 'text-green';
-			} else {
-				if (cellProperties.estado == 'error') {
+
+			switch(cellProperties.estado) {
+				case 'ok':
+					clase = 'text-green';
+					break;
+				case 'warning':
+					clase = 'text-yellow';
+					break;
+				case 'error':
 					clase = 'text-red';
-				}
+					break;
 			}
 		}
 
