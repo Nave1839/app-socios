@@ -72,7 +72,7 @@ $accion = $this->context->action->id;
                       'options' => ['class' => 'nav navbar-nav'],
                       'items' => [
                           [
-                              'label' => \Yii::t('app', 'Salir ({usuario})', ['usuario' => Yii::$app->user->identity->nombreCompleto]),
+                              'label' => \Yii::t('app', 'Salir'),
                               'url' => ['/site/logout'],
                               'linkOptions' => ['data-method' => 'post']
                           ],

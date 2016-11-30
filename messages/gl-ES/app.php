@@ -60,6 +60,7 @@ return [
     'Nº de Socio' => 'Nº de Socio',
     'OK' => 'OK',
     'Recuérdame' => 'Recórdame',
+    'Salir' => 'Saír',
     'Salir ({usuario})' => 'Saír ({usuario})',
     'Socio %d actualizado' => 'Socio %d actualizado',
     'Socio %d actualizado pero la letra del DNI debería ser la %s' => 'Socio %d actualizado pero a letra do DNI debería ser o %s',
