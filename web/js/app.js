@@ -105,6 +105,7 @@ $(function() {
 		var _columnaServidor;
 
 		// Traducimos los parámetros de configuración de la tabla
+		var _atributos = [];
 		var _colHeaders = [];
 		var _columns = [];
 		var _colWidths = [];

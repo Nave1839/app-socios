@@ -5,7 +5,7 @@
 <table class="table table-bordered table-striped js-dataTable" data-url="<?= Url::to(['/socio/api']) ?>">
   <thead>
   <tr>
-    <th>#</th>
+    <th><?= \Yii::t('app', 'Nº Socio'); ?></th>
     <th class="js-dataTable-ordenar"><?= \Yii::t('app', 'Nombre completo'); ?></th>
     <th><?= \Yii::t('app', 'DNI'); ?></th>
     <th></th>
