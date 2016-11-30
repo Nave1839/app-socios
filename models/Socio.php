@@ -110,10 +110,7 @@ class Socio extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         if ($termino) {            
             $consulta = $consulta->where(
                 ['or',
-                    ['or',
-                        ['like', 'nombre', $termino],
-                        ['like', 'apellidos', $termino]
-                    ],
+                    ['like', 'CONCAT_WS(" ",nombre,apellidos)', $termino],
                     ['like', 'dni', $termino]
                 ]
             );
