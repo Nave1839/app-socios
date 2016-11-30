@@ -164,48 +164,45 @@ $(function() {
 				var seleccion = hot.getSelected();
 				var fila = seleccion[0];
 				var col = seleccion[1];
-				var hayValor = false;
+				var podemosEscribir = false;
+				var delta = e.shiftKey ? -1 : 1;
 
-				if(e.shiftKey){
-					col = col - 1;
-				} else {
-					col = col + 1;
-				}
+				col = col + delta;
 				
-				while (!hayValor) {
+				// Buscamos la siguiente celda en la que podamos escribir
+				while (!podemosEscribir) {
 					
 					if (fila < 0) {
+						// Si no hay más filas nos quedamos en la misma celda
 						fila = seleccion[0];
 						col = seleccion[1];
-						hayValor = true;
+						podemosEscribir = true;
 					} else {
 						if (col < 0) {
+							// Si es la primera columna, saltamos a la fila anterior
 							fila = fila - 1;
 							col = _nColumnas - 1;
 						} else {
+							// Si es la última columna, saltamos a la fila siguiente
 							if (col >= _nColumnas) {
 								fila = fila + 1;
 								col = 0;
 							} else {
+								// Comprobamos si se puede escribir en la celda
 								siguenteCelda = hot.getCellMeta(fila, col);
 
-								console.log(siguenteCelda);
-
 								if (siguenteCelda.readOnly) {
-									if(e.shiftKey){
-										col = col - 1;
-									} else {
-										col = col + 1;
-									}
+									// Si no se puede, saltamos a la siguiente celda
+									col = col + delta;
 								} else {
-									hayValor = true;
+									podemosEscribir = true;
 								}
 							}
 						}
 					}
 				}
 				
-				return {row: fila - seleccion[0], col: col - seleccion[1]};
+				return {row: delta * (fila - seleccion[0]), col: delta * (col - seleccion[1])};
 			},
 			// Detecta cuando ha habido cambios en una fila
 			afterChange: function(cambios, tipo) {
