@@ -90,12 +90,12 @@ $(function() {
 	}
 	Handsontable.renderers.registerRenderer('mensajeDeServidorRenderer', mensajeDeServidorRenderer);
 
-
 	$('.js-handsontable').each(function() {
 
 		var $this = $(this);
 		// Los metadatos de la hoja se guardan como atributos HTML del contenedor
 		var _columnas = $this.data('columnas');
+		var _nColumnas = _columnas.length;
 		// Url en la que se guardan los datos de la hoja
 		var _url = $this.data('url');
 		// Columna que guarda la id de la entidad
@@ -162,29 +162,64 @@ $(function() {
 			tabMoves: function(e){
 				
 				var seleccion = hot.getSelected();
-				
-				var siguenteCelda;
-				
+				var fila = seleccion[0];
+				var col = seleccion[1];
+				var hayValor = false;
+
 				if(e.shiftKey){
-					siguenteCelda = hot.getCellMeta(seleccion[0], seleccion[1] - 1);
+					col = col - 1;
 				} else {
-					siguenteCelda = hot.getCellMeta(seleccion[0], seleccion[1] + 1);
+					col = col + 1;
 				}
 				
-				var filaDelta = 0;
-				var colDelta = siguenteCelda.readOnly ? 2 : 1;
+				while (!hayValor) {
+					
+					if (fila < 0) {
+						fila = seleccion[0];
+						col = seleccion[1];
+						hayValor = true;
+					} else {
+						if (col < 0) {
+							fila = fila - 1;
+							col = _nColumnas - 1;
+						} else {
+							if (col >= _nColumnas) {
+								fila = fila + 1;
+								col = 0;
+							} else {
+								siguenteCelda = hot.getCellMeta(fila, col);
+
+								console.log(siguenteCelda);
+
+								if (siguenteCelda.readOnly) {
+									if(e.shiftKey){
+										col = col - 1;
+									} else {
+										col = col + 1;
+									}
+								} else {
+									hayValor = true;
+								}
+							}
+						}
+					}
+				}
 				
-				return {row: filaDelta, col: colDelta};
+				return {row: fila - seleccion[0], col: col - seleccion[1]};
 			},
 			// Detecta cuando ha habido cambios en una fila
 			afterChange: function(cambios, tipo) {
 				if (cambios && tipo == 'edit') {
 					hayCambios = true;
-					if (_columnaId !== null) {
+				}
+			},
+			afterSelection: function (filaInicial, colInicial, filaFinal, colFinal) {
+				if (_columnaId !== null) {
+					for (var i = filaInicial; i <= filaFinal; i++) {
 						// Si todavía no tiene id, se lo asignamos
-						var id = hot.getDataAtCell(ultimaFila, _columnaId);
+						var id = hot.getDataAtCell(i, _columnaId);
 						if (!id) {
-							this.setDataAtCell(ultimaFila, _columnaId, _id++, 'loadData');
+							this.setDataAtCell(i, _columnaId, _id++, 'loadData');
 						}
 					}
 				}
