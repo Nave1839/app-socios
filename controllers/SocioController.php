@@ -69,12 +69,6 @@ class SocioController extends \yii\web\Controller
                 
                 if ($socio->save()) {
 
-                    if ($esNuevo) {
-                        $auth = \Yii::$app->authManager;
-                        $rol = $auth->getRole('socio');
-                        $auth->assign($rol, $socio->id);
-                    }
-
                     $transaction->commit();
                     \Yii::$app->session->setFlash('ok', \Yii::t('app', 'El socio se ha guardado correctamente'));
 
@@ -199,9 +193,7 @@ class SocioController extends \yii\web\Controller
         try {
 
             $hayErrores = false;
-            $auth = \Yii::$app->authManager;
-            $auth->revokeAll($socio->id);
-
+            
             if ($socio->delete()) {
                 \Yii::$app->session->setFlash('ok', \Yii::t('app', 'El socio se ha borrado correctamente'));
                 $transaction->commit();

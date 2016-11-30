@@ -77,6 +77,28 @@ class Socio extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         }
     }
 
+    public function afterSave($insert, $cambios)
+    {
+        parent::afterSave($insert,$cambios);
+
+        if ($insert) {
+            $auth = \Yii::$app->authManager;
+            $rol = $auth->getRole('socio');
+            $auth->assign($rol, $this->id);
+        }
+    }
+
+    public function beforeDelete()
+    {
+        if (parent::beforeDelete()) {
+            $auth = \Yii::$app->authManager;
+            $auth->revokeAll($this->id);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * IdentityInterface
      */
