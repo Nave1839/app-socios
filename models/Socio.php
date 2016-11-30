@@ -65,6 +65,18 @@ class Socio extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         ];
     }
 
+    public function beforeValidate()
+    {
+        if (parent::beforeValidate()) {
+            if ($this->fechaAlta == null) {
+                $this->fechaAlta = \Yii::$app->formatter->asDatetime(new \DateTime);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * IdentityInterface
      */

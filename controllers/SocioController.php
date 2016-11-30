@@ -59,10 +59,6 @@ class SocioController extends \yii\web\Controller
                     $socio->password =  \Yii::$app->passwordHash->create_hash($socio->password);
                 }
 
-                if ($esNuevo) {
-                    $socio->fechaAlta = \Yii::$app->formatter->asDatetime(new \DateTime);
-                }
-
                 if (!strlen(trim($socio->nombreUsuario))) {
                     $socio->nombreUsuario = null;
                 }
@@ -138,10 +134,6 @@ class SocioController extends \yii\web\Controller
             try {
                 $esNuevo = $socio->fechaAlta == null;
 
-                if ($esNuevo) {
-                    $socio->fechaAlta = \Yii::$app->formatter->asDatetime(new \DateTime);
-                }
-                
                 if ($socio->save()) {
 
                     if ($socio->esCorrectaLetraDni()) {
