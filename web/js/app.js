@@ -132,21 +132,18 @@ $(function() {
 				ancho = columna.ancho;
 			}
 
+			_atributos.push(columna.atributo);
 			_colHeaders.push(columna.nombre);
 			_columns.push(prop);
 			_colWidths.push(ancho);
 			_data.push(inicial);
 		});
 		
-		var _atributos = $.map(_columnas, function (col, i) {
-			return col.atributo;
-		});
-
 		var _mensajeGuardando = $this.data('mensaje-guardando');
 		var _mensajeErrorServidor = $this.data('mensaje-error-servidor');
 
-		var ultimaFila = 0;
-		var hayCambios = false;
+		var _ultimaFila = 0;
+		var _hayCambios = false;
 
 		var hot = new Handsontable(this, {
 			data: [_data],
@@ -157,6 +154,21 @@ $(function() {
 			colHeaders: _colHeaders,
 			columns: _columns,
 			colWidths: _colWidths,
+			/*
+			 * Formato de las celdas
+			 */
+			cells: function (row, col, prop) {
+				var cellProperties = {};
+				
+				if (col == _columnaServidor) {
+					cellProperties.renderer = 'mensajeDeServidorRenderer';
+				}
+
+				return cellProperties;
+			},
+			/*
+			 * Eventos del usuario
+			 */
 			// Al movermos con el tabulador nos saltamos las columnas
 			// que sean de solo lectura
 			tabMoves: function(e){
@@ -207,7 +219,7 @@ $(function() {
 			// Detecta cuando ha habido cambios en una fila
 			afterChange: function(cambios, tipo) {
 				if (cambios && tipo == 'edit') {
-					hayCambios = true;
+					_hayCambios = true;
 				}
 			},
 			afterSelection: function (filaInicial, colInicial, filaFinal, colFinal) {
@@ -224,8 +236,8 @@ $(function() {
 			// Cuando cambiamos de fila, envía los nuevos datos
 			// al servidor y recibe su respuesta
 			afterSelectionEnd: function(fila) {
-				if (hayCambios && ultimaFila != fila) {
-					var filaActual = ultimaFila;
+				if (_hayCambios && _ultimaFila != fila) {
+					var filaActual = _ultimaFila;
 					var url = _url;
 					var datos = {};
 					var hayMensajesAServidor = !!_columnaServidor;
@@ -271,19 +283,10 @@ $(function() {
 						}
 					});
 
-					hayCambios = false;
+					_hayCambios = false;
 				}
 				
-				ultimaFila = fila;
-			},
-			cells: function (row, col, prop) {
-				var cellProperties = {};
-				
-				if (col == _columnaServidor) {
-					cellProperties.renderer = 'mensajeDeServidorRenderer';
-				}
-
-				return cellProperties;
+				_ultimaFila = fila;
 			}
 		});
 
