@@ -98,9 +98,46 @@ $(function() {
 		var _columnas = $this.data('columnas');
 		// Url en la que se guardan los datos de la hoja
 		var _url = $this.data('url');
+		// Columna que guarda la id de la entidad
+		var _columnaId = null;
+		var _id = 1;
 		// Columna que muestra los mensajes del servidor
-		var _columnaServidor = parseInt($this.data('columna-servidor'), 10);
+		var _columnaServidor;
 
+		// Traducimos los parámetros de configuración de la tabla
+		var _colHeaders = [];
+		var _columns = [];
+		var _colWidths = [];
+		var _data = [];
+		
+		$.each(_columnas, function(i, columna) {
+			var prop = {};
+			var ancho = 150;
+			var inicial = '';
+
+			switch (columna.tipo) {
+				case 'id':
+					_columnaId = i;
+					_id = columna.inicial;
+					prop.readOnly = true;
+					inicial = _id++;
+					break;
+				case 'servidor':
+					_columnaServidor = i;
+					prop.readOnly = true;
+					break;
+			}
+
+			if (!!columna.ancho) {
+				ancho = columna.ancho;
+			}
+
+			_colHeaders.push(columna.nombre);
+			_columns.push(prop);
+			_colWidths.push(ancho);
+			_data.push(inicial);
+		});
+		
 		var _atributos = $.map(_columnas, function (col, i) {
 			return col.atributo;
 		});
@@ -112,30 +149,14 @@ $(function() {
 		var hayCambios = false;
 
 		var hot = new Handsontable(this, {
-			minRows: 20,
+			data: [_data],
 			minSpareRows: 1,
 			autoWrapRow: true,
 			stretchH: 'all',
 			rowHeaders: true,
-			colHeaders: $.map(_columnas, function (col, i) {
-				return col.nombre;
-			}),
-			columns: $.map(_columnas, function (col, i) {
-				var prop = {};
-
-				if (i == _columnaServidor) {
-					prop.readOnly = true;
-				}
-
-				return prop;
-			}),
-			colWidths: $.map(_columnas, function (col, i) {
-				if (i == _columnaServidor) {
-					return 200;
-				}
-
-				return 150;
-			}),
+			colHeaders: _colHeaders,
+			columns: _columns,
+			colWidths: _colWidths,
 			// Al movermos con el tabulador nos saltamos las columnas
 			// que sean de solo lectura
 			tabMoves: function(e){
@@ -159,6 +180,13 @@ $(function() {
 			afterChange: function(cambios, tipo) {
 				if (cambios && tipo == 'edit') {
 					hayCambios = true;
+					if (_columnaId !== null) {
+						// Si todavía no tiene id, se lo asignamos
+						var id = hot.getDataAtCell(ultimaFila, _columnaId);
+						if (!id) {
+							this.setDataAtCell(ultimaFila, _columnaId, _id++, 'loadData');
+						}
+					}
 				}
 			},
 			// Cuando cambiamos de fila, envía los nuevos datos
@@ -166,17 +194,20 @@ $(function() {
 			afterSelectionEnd: function(fila) {
 				if (hayCambios && ultimaFila != fila) {
 					var filaActual = ultimaFila;
-					var meta = hot.getCellMeta(filaActual, _columnaServidor);
 					var url = _url;
 					var datos = {};
+					var hayMensajesAServidor = !!_columnaServidor;
+					var id = _columnaId !== null ? hot.getDataAtCell(filaActual, _columnaId) : null;
 
-					hot.setCellMeta(filaActual, _columnaServidor, 'estado', '');
-					hot.setDataAtCell(filaActual, _columnaServidor, _mensajeGuardando, 'loadData');
+					if (hayMensajesAServidor) {
+						hot.setCellMeta(filaActual, _columnaServidor, 'estado', '');
+						hot.setDataAtCell(filaActual, _columnaServidor, _mensajeGuardando, 'loadData');
+					}
 
 					// Si la fila está asociada a una entidad,
 					// actualizamos la url
-					if (meta.id) {
-						url = url + '/' + meta.id;
+					if (id) {
+						url = url + '/' + id;
 					}
 
 					// Guardamos los datos a enviar, asociándolos
@@ -191,17 +222,21 @@ $(function() {
 					$.post(url,
 						datos,
 						function(resultado) {
-							hot.setCellMeta(filaActual, _columnaServidor, 'estado', resultado.estado);
-							if (resultado.id) {
-								hot.setCellMeta(filaActual, _columnaServidor, 'id', resultado.id);
+							if (hayMensajesAServidor) {
+								hot.setCellMeta(filaActual, _columnaServidor, 'estado', resultado.estado);
+								if (resultado.id) {
+									hot.setCellMeta(filaActual, _columnaServidor, 'id', resultado.id);
+								}
+								hot.setDataAtCell(filaActual, _columnaServidor, resultado.mensaje, 'loadData');
 							}
-							hot.setDataAtCell(filaActual, _columnaServidor, resultado.mensaje, 'loadData');
 						},
 						'json'
 					).fail(function () {
 						// Error de servidor
-						hot.setCellMeta(filaActual, _columnaServidor, 'estado', 'error');
-						hot.setDataAtCell(filaActual, _columnaServidor, _mensajeErrorServidor, 'loadData');
+						if (hayMensajesAServidor) {
+							hot.setCellMeta(filaActual, _columnaServidor, 'estado', 'error');
+							hot.setDataAtCell(filaActual, _columnaServidor, _mensajeErrorServidor, 'loadData');
+						}
 					});
 
 					hayCambios = false;
@@ -219,5 +254,6 @@ $(function() {
 				return cellProperties;
 			}
 		});
+
 	});
 });

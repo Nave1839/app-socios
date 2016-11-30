@@ -82,6 +82,14 @@ class Socio extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return null;
     }
 
+    public static function siguienteId()
+    {
+        return Socio::find()
+            ->select('(socio.id + 1)')
+            ->orderBy('socio.id DESC')
+            ->scalar();
+    }
+
     public static function dataTable($desde, $limite, $termino, $orden = null)
     {
         $consulta = Socio::find();

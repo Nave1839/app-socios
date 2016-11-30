@@ -95,6 +95,10 @@ class SocioController extends \yii\web\Controller
             }
         }
 
+        if ($socio->id == null) {
+            $socio->id = Socio::siguienteId();
+        }
+
         $socio->password = '';
         return $this->render('editar', ['socio' => $socio ]);
     }
@@ -118,15 +122,21 @@ class SocioController extends \yii\web\Controller
         $resultado = [];
 
         if ($id) {
-            $socio = $this->comprobar($id);            
+            $socio = $socio = Socio::findOne($id);
+            if (!$socio) {
+                // El socio con ese id todavía no se ha creado
+                $socio = new Socio;
+                $socio->id = $id;
+            }
         } else {
-            $socio = new Socio;            
+            $socio = new Socio;
+            $socio->id = Socio::siguienteId();            
         }
 
         if ($socio->load(\Yii::$app->request->post())){
             $transaction = Socio::getDb()->beginTransaction();
             try {
-                $esNuevo = $socio->isNewRecord;
+                $esNuevo = $socio->fechaAlta == null;
 
                 if ($esNuevo) {
                     $socio->fechaAlta = \Yii::$app->formatter->asDatetime(new \DateTime);

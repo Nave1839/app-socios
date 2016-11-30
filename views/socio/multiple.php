@@ -1,9 +1,17 @@
 <?php
 	use yii\helpers\Url;
+	use app\models\Socio;
 
 	$this->title = \Yii::t('app', 'Crear socios');
 
 	$columnas = [
+		[
+			'nombre' => \Yii::t('app', 'Nº Socio'),
+			'atributo' => 'Socio[id]',
+			'ancho' => 50,
+			'tipo' => 'id',
+			'inicial' => Socio::siguienteId()
+		],
 		[
 			'nombre' => \Yii::t('app', 'Nombre'),
 			'atributo' => 'Socio[nombre]'
@@ -14,14 +22,16 @@
 		],
 		[
 			'nombre' => \Yii::t('app', 'DNI'),
-			'atributo' => 'Socio[dni]'
+			'atributo' => 'Socio[dni]',
+			'ancho' => 100
 		],
 		[
 			'nombre' => \Yii::t('app', 'Email'),
 			'atributo' => 'Socio[email]'
 		],
 		[
-			'nombre' => \Yii::t('app', 'Mensaje')
+			'nombre' => \Yii::t('app', 'Mensaje'),
+			'tipo' => 'servidor'
 		]
 	];
 ?>
@@ -34,7 +44,6 @@
 		    <div class="handsontable js-handsontable" 
 		    	data-columnas='<?= json_encode($columnas) ?>'
 		    	data-url="<?= Url::to('/socio/actualizar') ?>"
-		    	data-columna-servidor="4"
 		    	data-mensaje-guardando="<?= \Yii::t('app', 'Guardando...') ?>"
 		    	data-mensaje-error-servidor="<?= \Yii::t('app', 'Error en el servidor'); ?>"
 		    ></div>

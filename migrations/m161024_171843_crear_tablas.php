@@ -9,7 +9,7 @@ class m161024_171843_crear_tablas extends Migration
         // TABLAS
 
         $this->createTable('socio', [
-            'id'                =>    $this->primaryKey(),
+            'id'                =>    $this->integer()->notNull(),
             'fechaAlta'         =>    $this->dateTime()->notNull(),
             'nombre'            =>    $this->text()->notNull(),
             'apellidos'         =>    $this->text()->notNull(),
@@ -18,7 +18,10 @@ class m161024_171843_crear_tablas extends Migration
             'nombreUsuario'     =>    $this->string(64)->unique(),
             'password'          =>    $this->text(),
             'notas'             =>    $this->text(),
+            'PRIMARY KEY(id)'
         ]);
+        // El id del socio no se incrementa automáticamente por mysql
+        $this->createIndex('idx-socio-id', 'socio', 'id');
 
         // ROLES
 
@@ -34,6 +37,7 @@ class m161024_171843_crear_tablas extends Migration
         $hoy = new \DateTime;
 
         $this->insert('socio', [
+            'id' => 1,
             'nombre' => 'Administrador',
             'apellidos' => 'Por defecto',
             'dni' => 'noexiste',
