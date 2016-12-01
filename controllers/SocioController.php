@@ -257,6 +257,84 @@ class SocioController extends \yii\web\Controller
         return $this->render('multiple');
     }
 
+    public function actionErrores()
+    {
+        $errores = [];
+
+        $socios = Socio::find()->all();
+
+        if ($socios && count($socios)) {
+            $dnis = [];
+            foreach ($socios as $socio) {
+                if (!$socio->nombre || !strlen(trim($socio->nombre))) {
+                    $error = [
+                        'campo' => \Yii::t('app', 'Nombre'),
+                        'mensaje' => \Yii::t('app', '{socio} no tiene <b>nombre</b>', ['socio' => Html::a($socio->nombreCompleto, ['/socio/editar', 'id' => $socio->id])])
+                    ];
+                    $errores[] = $error;
+                } else {
+                    if (!$socio->apellidos || !strlen(trim($socio->apellidos))) {
+                        $error = [
+                            'campo' => \Yii::t('app', 'Apellidos'),
+                            'mensaje' => \Yii::t('app', '{socio} no tiene <b>apellidos</b>', ['socio' => Html::a($socio->nombreCompleto, ['/socio/editar', 'id' => $socio->id])])
+                        ];
+                        $errores[] = $error;                        
+                    } else {
+                        if (!$socio->dni) {
+                            $error = [
+                                'campo' => \Yii::t('app', 'DNI'),
+                                'mensaje' => \Yii::t('app', '{socio} no tiene <b>DNI</b>', ['socio' => Html::a($socio->nombreCompleto, ['/socio/editar', 'id' => $socio->id])])
+                            ];
+                            $errores[] = $error;
+                            
+                        } else {
+                            if (!$socio->esCorrectaLetraDni()) {
+                                $dni = $socio->dni;
+                                if (strlen($dni) == 9 && ctype_alpha(substr($dni, 8, 1))) {
+                                    $error = [
+                                        'campo' => \Yii::t('app', 'DNI'),
+                                        'mensaje' => \Yii::t('app', 'La letra del <b>DNI</b> de {socio} no es correcta', ['socio' => Html::a($socio->nombreCompleto, ['/socio/editar', 'id' => $socio->id])])
+                                    ];
+                                } elseif (!ctype_alpha(substr($dni, strlen($dni) - 1, 1))) {
+                                    $error = [
+                                        'campo' => \Yii::t('app', 'DNI'),
+                                        'mensaje' => \Yii::t('app', 'Falta la letra en el <b>DNI</b> de {socio}', ['socio' => Html::a($socio->nombreCompleto, ['/socio/editar', 'id' => $socio->id])])
+                                    ];
+                                } else {
+                                    $error = [
+                                        'campo' => \Yii::t('app', 'DNI'),
+                                        'mensaje' => \Yii::t('app', 'Falta algún dígito en el <b>DNI</b> de {socio}', ['socio' => Html::a($socio->nombreCompleto, ['/socio/editar', 'id' => $socio->id])])
+                                    ];
+                                }
+                                
+                                $errores[] = $error;                                
+                            }
+
+                            $dniSinLetra = substr($socio->dni, 0, 8);
+
+                            if (isset($dnis[$dniSinLetra])) {
+                                $socio1 = $dnis[$dniSinLetra];
+
+                                $error = [
+                                    'campo' => \Yii::t('app', 'DNI'),
+                                    'mensaje' => \Yii::t('app', '{socio1} y {socio2} tienen el mismo <b>DNI</b>', [
+                                        'socio1' => Html::a($socio1->nombreCompleto, ['/socio/editar', 'id' => $socio1->id]),
+                                        'socio2' => Html::a($socio->nombreCompleto, ['/socio/editar', 'id' => $socio->id])
+                                    ])
+                                ];
+                                $errores[] = $error;
+                            } else {
+                                $dnis[$dniSinLetra] = $socio;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $this->render('errores', ['errores' => $errores]);
+    }
+
     public function actionApi()
     {
         $post = \Yii::$app->request->post();
