@@ -265,6 +265,8 @@ class Socio extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
             $errores[] = self::ERROR_NO_DNI;
             
+        } elseif (strlen($dni) == 8 && !ctype_alpha(substr($dni, 7, 1))) {
+            $errores[] = self::ERROR_NO_LETRA_DNI;     
         } elseif (strlen($dni) < 9) {
             $errores[] = self::ERROR_NO_DIGITO_DNI;
         } elseif (strlen($dni) > 9) {
@@ -320,13 +322,14 @@ class Socio extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public function esCorrectaLetraDni()
     {
-        if (!$this->dni) {
+        $dni = $this->dni;
+        
+        if (!$dni) {
             return true;
         }
 
-        $dni = intval($this->dni);
-        $dni .= $this->letraDniCorrecta;
+        $dni = strtoupper($dni);
 
-        return strcmp($this->dni, $dni) == 0;
+        return strcmp(substr($dni, strlen($dni) - 1, 1), $this->letraDniCorrecta) == 0;
     }
 }

@@ -17,8 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Sobra algún dígito en el <b>DNI</b>' => 'Sobra algún díxito no <b>DNI</b>',
-    'Sobra algún dígito en el <b>DNI</b> de {socio}' => 'Sobra algún díxito no <b>DNI</b> de {socio}',
+    'El <b>DNI</b> de {socio} no tiene letra' => 'O <b>DNI</b> de {socio} non ten letra',
     'Salir ({usuario})' => '@@Saír ({usuario})@@',
     'Advertencia' => 'Advertencia',
     'Apellidos' => 'Apelidos',
@@ -47,7 +46,6 @@ return [
     'Ese socio no existe' => 'Ese socio non existe',
     'Falta algún dígito en el <b>DNI</b>' => 'Falta algún díxito no <b>DNI</b>',
     'Falta algún dígito en el <b>DNI</b> de {socio}' => 'Falta algún díxito no <b>DNI</b> de {socio}',
-    'Falta la letra en el <b>DNI</b> de {socio}' => 'Falta a letra no <b>DNI</b> de {socio}',
     'Fecha de alta' => 'Data de alta',
     'Fichero Excel' => 'Arquivo Excel',
     'Guardando...' => 'Gardando...',
@@ -77,6 +75,8 @@ return [
     'OK' => 'OK',
     'Recuérdame' => 'Recórdame',
     'Salir' => 'Saír',
+    'Sobra algún dígito en el <b>DNI</b>' => 'Sobra algún díxito no <b>DNI</b>',
+    'Sobra algún dígito en el <b>DNI</b> de {socio}' => 'Sobra algún díxito no <b>DNI</b> de {socio}',
     'Socio %d actualizado' => 'Socio %d actualizado',
     'Socio %d actualizado pero la letra del DNI debería ser la %s' => 'Socio %d actualizado pero a letra do DNI debería ser o %s',
     'Socio %d creado' => 'Socio %d creado',

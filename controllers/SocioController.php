@@ -291,7 +291,7 @@ class SocioController extends \yii\web\Controller
                         case Socio::ERROR_NO_LETRA_DNI:
                             $errores[] = [
                                 'campo' => \Yii::t('app', 'DNI'),
-                                'mensaje' => \Yii::t('app', 'Falta la letra en el <b>DNI</b> de {socio}', ['socio' => Html::a($socio->nombreCompleto, ['/socio/editar', 'id' => $socio->id])])
+                                'mensaje' => \Yii::t('app', 'El <b>DNI</b> de {socio} no tiene letra', ['socio' => Html::a($socio->nombreCompleto, ['/socio/editar', 'id' => $socio->id])])
                             ];
                             break;
                         case Socio::ERROR_NO_DIGITO_DNI:
