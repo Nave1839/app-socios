@@ -17,7 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'El <b>DNI</b> de {socio} no tiene letra' => 'O <b>DNI</b> de {socio} non ten letra',
+    'El <b>DNI</b> no tiene letra y debería ser la {letra}' => 'O <b>DNI</b> non ten letra e debería ser o {letra}',
     'Salir ({usuario})' => '@@Saír ({usuario})@@',
     'Advertencia' => 'Advertencia',
     'Apellidos' => 'Apelidos',
@@ -31,6 +31,7 @@ return [
     'Datos de acceso a la aplicación' => 'Datos de acceso á aplicación',
     'Datos del socio' => 'Datos do socio',
     'Editar' => 'Editar',
+    'El <b>DNI</b> de {socio} no tiene letra' => 'O <b>DNI</b> de {socio} non ten letra',
     'El <b>DNI</b> no tiene letra' => 'O <b>DNI</b> non ten letra',
     'El socio no se ha podido borrar' => 'Non foi posible borrar o socio',
     'El socio se ha borrado correctamente' => 'O socio foi borrado correctamente',

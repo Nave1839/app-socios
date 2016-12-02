@@ -46,10 +46,12 @@
 					$erroresEnDNI = $socio->erroresEnDNI();
 					if (count($erroresEnDNI)) :
 						$error = $erroresEnDNI[0];
+						$letra = $socio->letraDniCorrecta;
 
-						if ($error == Socio::ERROR_LETRA_DNI_INCORRECTA) {	
-							$letra = $socio->letraDniCorrecta;
+						if ($error == Socio::ERROR_LETRA_DNI_INCORRECTA) {								
 							$mensaje = \Yii::t('app', 'La letra del DNI debería ser {letra}', ['letra' => $letra]);
+						} elseif ($error == Socio::ERROR_NO_LETRA_DNI && strlen($socio->dni) == 8) {
+							$mensaje = \Yii::t('app', 'El <b>DNI</b> no tiene letra y debería ser la {letra}', ['letra' => $letra]);
 						} else {
 							$mensaje = $socio->mensajeDeError($error);
 						}
