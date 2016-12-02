@@ -2,6 +2,7 @@
 	use \yii\helpers\Url;
 	use yii\helpers\Html;
 	use yii\bootstrap\ActiveForm;
+	use app\models\Socio;
 
 	$esNuevo = $socio->fechaAlta == null;
 
@@ -42,11 +43,19 @@
 				<?= $form->field($socio, 'dni')->textInput(); ?>
 
 				<?php 
-					if (!$socio->esCorrectaLetraDni()) :
-						$letra = $socio->letraDniCorrecta;
-				?>	      	
+					$erroresEnDNI = $socio->erroresEnDNI();
+					if (count($erroresEnDNI)) :
+						$error = $erroresEnDNI[0];
+
+						if ($error == Socio::ERROR_LETRA_DNI_INCORRECTA) {	
+							$letra = $socio->letraDniCorrecta;
+							$mensaje = \Yii::t('app', 'La letra del DNI debería ser {letra}', ['letra' => $letra]);
+						} else {
+							$mensaje = $socio->mensajeDeError($error);
+						}
+					?>
 					<div class="form-group has-warning">
-						<span class="help-block"><?= \Yii::t('app', 'La letra del DNI debería ser {letra}', ['letra' => $letra]); ?></span>
+						<span class="help-block"><?= $mensaje ?></span>
 					</div>    		      	
 				<?php 
 					endif;

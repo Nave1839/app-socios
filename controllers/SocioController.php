@@ -300,6 +300,12 @@ class SocioController extends \yii\web\Controller
                                 'mensaje' => \Yii::t('app', 'Falta algún dígito en el <b>DNI</b> de {socio}', ['socio' => Html::a($socio->nombreCompleto, ['/socio/editar', 'id' => $socio->id])])
                             ];
                             break;
+                        case Socio::ERROR_MAS_DIGITO_DNI:
+                            $errores[] = [
+                                'campo' => \Yii::t('app', 'DNI'),
+                                'mensaje' => \Yii::t('app', 'Sobra algún dígito en el <b>DNI</b> de {socio}', ['socio' => Html::a($socio->nombreCompleto, ['/socio/editar', 'id' => $socio->id])])
+                            ];
+                            break;
                         case Socio::ERROR_LETRA_DNI_INCORRECTA:
                             $errores[] = [
                                 'campo' => \Yii::t('app', 'DNI'),
