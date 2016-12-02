@@ -21,6 +21,13 @@ use Yii;
 class Socio extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
 
+    const ERROR_NO_NOMBRE = 'sin nombre';
+    const ERROR_NO_APELLIDOS = 'sin apellidos';
+    const ERROR_NO_DNI = 'sin dni';
+    const ERROR_NO_LETRA_DNI = 'sin letra de dni';
+    const ERROR_NO_DIGITO_DNI = 'falta dígito en dni';
+    const ERROR_LETRA_DNI_INCORRECTA = 'letra de dni incorrecta';
+
     /**
      * @inheritdoc
      */
@@ -225,6 +232,59 @@ class Socio extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         }
 
         return \Yii::$app->passwordHash->validate_password($password, $this->password);
+    }
+
+    public function erroresEnDatos()
+    {
+        $errores = [];
+        if (!$this->nombre || !strlen(trim($this->nombre))) {
+            $errores[] = self::ERROR_NO_NOMBRE;
+        }
+
+        if (!$this->apellidos || !strlen(trim($this->apellidos))) {
+            $errores[] = self::ERROR_NO_APELLIDOS;
+        } 
+                
+        if (!$this->dni) {
+
+            $errores[] = self::ERROR_NO_DNI;
+            
+        } elseif (!$this->esCorrectaLetraDni()) {
+            $dni = $this->dni;
+            if (strlen($dni) == 9 && ctype_alpha(substr($dni, 8, 1))) {
+                $errores[] = self::ERROR_LETRA_DNI_INCORRECTA;
+            } elseif (!ctype_alpha(substr($dni, strlen($dni) - 1, 1))) {
+                $errores[] = self::ERROR_NO_LETRA_DNI;                
+            } else {
+                $errores[] = self::ERROR_NO_DIGITO_DNI;
+            }                      
+        }
+
+        return $errores;
+    }
+
+    public function getPrimerError()
+    {
+        $errores = $this->erroresEnDatos();
+
+        if (count($errores)) {
+            switch ($errores[0]) {
+                case Socio::ERROR_NO_NOMBRE:
+                    return \Yii::t('app', 'No tiene <b>nombre</b>');                    
+                case Socio::ERROR_NO_APELLIDOS:
+                    return \Yii::t('app', 'No tiene <b>apellidos</b>');
+                case Socio::ERROR_NO_DNI:
+                    return \Yii::t('app', 'No tiene <b>DNI</b>');
+                case Socio::ERROR_NO_LETRA_DNI:
+                    return \Yii::t('app', 'El <b>DNI</b> no tiene letra');
+                case Socio::ERROR_NO_DIGITO_DNI:
+                    return \Yii::t('app', 'Falta algún dígito en el <b>DNI</b>');
+                case Socio::ERROR_LETRA_DNI_INCORRECTA:
+                    return \Yii::t('app', 'La letra del <b>DNI</b> es incorrecta');
+            }
+        }
+
+        return '';
     }
 
     public function getLetraDniCorrecta()

@@ -17,9 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Falta algún dígito en el <b>DNI</b> de {socio}' => 'Falta algún díxito no <b>DNI</b> de {socio}',
-    'Falta la letra en el <b>DNI</b> de {socio}' => 'Falta a letra no <b>DNI</b> de {socio}',
-    'La letra del <b>DNI</b> de {socio} no es correcta' => 'A letra do <b>DNI</b> de {socio} non é correcta',
+    'Advertencia' => 'Advertencia',
+    'El <b>DNI</b> no tiene letra' => 'O <b>DNI</b> non ten letra',
+    'Falta algún dígito en el <b>DNI</b>' => 'Falta algún díxito no <b>DNI</b>',
+    'La letra del <b>DNI</b> es incorrecta' => 'A letra do <b>DNI</b> é incorrecta',
+    'No tiene <b>DNI</b>' => 'Non ten <b>DNI</b>',
+    'No tiene <b>apellidos</b>' => 'Non ten <b>apelidos</b>',
+    'No tiene <b>nombre</b>' => 'Non ten <b>nome</b>',
     'Salir ({usuario})' => '@@Saír ({usuario})@@',
     'Apellidos' => 'Apelidos',
     'Campo' => 'Campo',
@@ -44,6 +48,8 @@ return [
     'Errores' => 'Erros',
     'Errores en los socios' => 'Erros nos socios',
     'Ese socio no existe' => 'Ese socio non existe',
+    'Falta algún dígito en el <b>DNI</b> de {socio}' => 'Falta algún díxito no <b>DNI</b> de {socio}',
+    'Falta la letra en el <b>DNI</b> de {socio}' => 'Falta a letra no <b>DNI</b> de {socio}',
     'Fecha de alta' => 'Data de alta',
     'Fichero Excel' => 'Arquivo Excel',
     'Guardando...' => 'Gardando...',
@@ -51,6 +57,7 @@ return [
     'Importar' => 'Importar',
     'Importar socios' => 'Importar socio',
     'Importar socios desde un excel' => 'Importar socio desde un excel',
+    'La letra del <b>DNI</b> de {socio} no es correcta' => 'A letra do <b>DNI</b> de {socio} non é correcta',
     'La letra del DNI debería ser {letra}' => 'A letra do DNI debería ser o {letra}',
     'Los socios se han importado correctamente' => 'Os socios foron importados correctamente',
     'Mensaje' => 'Mensaxe',
