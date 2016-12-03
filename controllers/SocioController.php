@@ -25,15 +25,7 @@ class SocioController extends \yii\web\Controller
                     ],
                     [
                         'allow' => true,
-                        'matchCallback' => function ($rule, $action) {
-                            $hostName = \Yii::$app->request->hostName;
-
-                            if ($hostName == 'localhost') {
-                                return true;
-                            }
-
-                            return !Yii::$app->user->isGuest;
-                        }
+                        'roles' => ['@']
                     ]
                 ],            
             ]
