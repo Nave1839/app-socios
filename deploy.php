@@ -2,6 +2,10 @@
 
 require 'recipe/yii2-app-basic.php';
 
+set('shared_dirs', [
+	'backups'
+]);
+
 set('shared_files', ['config/db.php']);
 
 server('prod', '188.166.174.54', 22)
