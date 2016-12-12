@@ -15,4 +15,4 @@ server('prod', '188.166.174.54', 22)
     ->env('branch', 'master')
     ->env('deploy_path', '/var/www/app.nave1839.org/www');
 
-set('repository', 'git@bitbucket.org:edupoch/app.nave1839.org.git');
+set('repository', 'git@github.com:Nave1839/app-socios.git');
