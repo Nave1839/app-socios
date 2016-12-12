@@ -23,6 +23,7 @@ git clone https://github.com/Nave1839/app-socios
 cd app-socios
 composer global require "fxp/composer-asset-plugin:^1.2.0"
 composer install
+```
 
 Configuración
 -------------
@@ -45,6 +46,7 @@ Una vez hecho esto, puedes crear la estructura de tablas ejecutando el siguiente
 
 ```bash
 yii migrate
+```
 
 Ejecución
 ---------
