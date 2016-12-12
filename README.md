@@ -1,6 +1,3 @@
-Aplicación web para la gestión de los datos de nuestros socios
-==============================================================
-
 Hemos desarrollado esta aplicación para que nos permita guardar, consultar y modificar los datos de nuestros socios de una forma sencilla.
 
 Está basada en [Yii 2](http://www.yiiframework.com/), un framework de desarrollo de aplicaciones web en PHP.
