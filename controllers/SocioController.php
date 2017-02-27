@@ -242,14 +242,47 @@ class SocioController extends \yii\web\Controller
         return $this->render('importar', ['importacion' => $importacion]);
     }
 
-    public function actionExportar()
+    public function actionExportar($tipo = null)
     {
-        $socios = Socio::find()->all();
+        if ($tipo) {
+            $hoy = new \DateTime;
+            $hoy = preg_replace('/\s/', '_', \Yii::$app->formatter->asDateTime($hoy));
 
+            switch ($tipo) {
+                case 'newsletter':
+
+                    $exportador = new \yii2tech\csvgrid\CsvGrid([
+                        'dataProvider' => new \yii\data\ActiveDataProvider([
+                            'query' => Socio::find()
+                                ->where(['quiereNewsletter' => true])
+                                ->andWhere(['not', ['email' => null]]),
+                            'pagination' => false
+                        ]),
+                        'columns' => [
+                            [
+                                'attribute' => 'email',
+                            ],
+                            [
+                                'attribute' => 'nombreCompleto',
+                            ],
+                        ],
+                    ]);
+
+                    $fichero =  $hoy . '-newsletter.csv';
+                    $path = \Yii::getAlias('@runtime/exportaciones/' . $fichero);
+
+                    $exportador->export()->saveAs($path);
+                    return \Yii::$app->response->sendFile($path);
+
+                    break;
+            }
+        }
         // \moonland\phpexcel\Excel::export([
         //     'models' => $socios, 
         //     'columns' => ['nombre', 'apellidos']
         // ]);
+
+        return $this->render('exportar');
     }
 
     public function actionMultiple()

@@ -16,6 +16,7 @@ use Yii;
  * @property string $nombreUsuario
  * @property string $password
  * @property string $notas
+ * @property boolean $quiereNewsletter
  *
  */
 class Socio extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
@@ -46,6 +47,7 @@ class Socio extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['fechaAlta', 'nombre', 'apellidos', 'dni'], 'required'],
             [['fechaAlta'], 'safe'],
             [['nombre', 'apellidos', 'password', 'notas'], 'string'],
+            [['quiereNewsletter'], 'boolean'],
             [['dni', 'email', 'nombreUsuario'], 'string', 'max' => 64],
             [['nombreUsuario'], 'match', 'pattern' => '/^[a-z]\w*$/i', 'message' => 'El nombre de usuario no tiene un formato válido'],
             [['dni'], 'unique'],
@@ -69,7 +71,8 @@ class Socio extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'email' => \Yii::t('app', 'Email'),
             'nombreUsuario' => \Yii::t('app', 'Nombre de usuario'),
             'password' => \Yii::t('app', 'Contraseña'),
-            'notas' => \Yii::t('app', 'Notas'),            
+            'notas' => \Yii::t('app', 'Notas'),
+            'quiereNewsletter' => \Yii::t('app', '¿Quiere recibir la newsletter?'),
         ];
     }
 

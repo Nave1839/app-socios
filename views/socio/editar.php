@@ -65,6 +65,8 @@
 
 				<?= $form->field($socio, 'email')->textInput(); ?>		      	
 
+				<?= $form->field($socio, 'quiereNewsletter')->checkbox(); ?>
+
 			  </div>
 			  <!-- /.box-body -->		        
 			  <div class="box-footer">

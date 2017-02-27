@@ -8,7 +8,7 @@
 		[
 			'nombre' => \Yii::t('app', 'Nº Socio'),
 			'atributo' => 'Socio[id]',
-			'ancho' => 50,
+			'ancho' => 70,
 			'tipo' => 'id',
 			'inicial' => Socio::siguienteId()
 		],
@@ -28,6 +28,12 @@
 		[
 			'nombre' => \Yii::t('app', 'Email'),
 			'atributo' => 'Socio[email]'
+		],
+		[
+			'nombre' => \Yii::t('app', '¿Newsletter?'),
+			'atributo' => 'Socio[quiereNewsletter]',
+			'ancho' => 80,
+			'tipo' => 'checkbox'
 		],
 		[
 			'nombre' => \Yii::t('app', 'Mensaje'),

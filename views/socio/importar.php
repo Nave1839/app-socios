@@ -16,7 +16,7 @@
       <div class="box box-info">
         <!-- form start -->
           <div class="box-header with-border">
-            <h3 class="box-title"><?= \Yii::t('app', 'Importar socios desde un excel'); ?></h3>
+            <h3 class="box-title"><?= \Yii::t('app', 'Desde un excel'); ?></h3>
           </div>
           
           <div class="box-body">

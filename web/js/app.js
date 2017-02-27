@@ -127,6 +127,12 @@ $(function() {
 					_columnaServidor = i;
 					prop.readOnly = true;
 					break;
+				case 'checkbox':
+					prop.type = 'checkbox';
+					prop.checkedTemplate = 1;
+					prop.uncheckedTemplate = 0;
+					inicial = 0;
+					break;
 			}
 
 			if (!!columna.ancho) {

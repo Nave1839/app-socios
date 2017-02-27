@@ -24,7 +24,8 @@
         "kartik-v/yii2-datecontrol": "^1.9",
         "fortawesome/font-awesome": "^4.6",
         "moonlandsoft/yii2-phpexcel": "*",
-        "bower-asset/handsontable": "^0.29.0"
+        "bower-asset/handsontable": "^0.29.0",
+        "yii2tech/csv-grid": "^1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
