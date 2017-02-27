@@ -99,6 +99,7 @@ $accion = $this->context->action->id;
               <li class="<?= $controlador == 'socio' && $accion == 'nuevo' ? 'active' : '' ?>" ><a href="<?= Url::to(['socio/nuevo']) ?>"><i class="fa fa-plus"></i> <?= \Yii::t('app', 'Crear 1'); ?></a></li>
               <li class="<?= $controlador == 'socio' && $accion == 'multiple' ? 'active' : '' ?>" ><a href="<?= Url::to(['socio/multiple']) ?>"><i class="fa fa-table"></i> <?= \Yii::t('app', 'Crear más de 1'); ?></a></li>
               <li class="<?= $controlador == 'socio' && $accion == 'importar' ? 'active' : '' ?>" ><a href="<?= Url::to(['socio/importar']) ?>"><i class="fa fa-upload"></i> <?= \Yii::t('app', 'Importar'); ?></a></li>
+              <li class="<?= $controlador == 'socio' && $accion == 'exportar' ? 'active' : '' ?>" ><a href="<?= Url::to(['socio/exportar']) ?>"><i class="fa fa-download"></i> <?= \Yii::t('app', 'Exportar'); ?></a></li>
               <li class="<?= $controlador == 'socio' && $accion == 'errores' ? 'active' : '' ?>" ><a href="<?= Url::to(['socio/errores']) ?>"><i class="fa fa-exclamation-triangle"></i> <?= \Yii::t('app', 'Errores'); ?></a></li>
             </ul>
           </li>        

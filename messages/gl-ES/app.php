@@ -17,8 +17,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'El <b>DNI</b> no tiene letra y debería ser la {letra}' => 'O <b>DNI</b> non ten letra e debería ser o {letra}',
-    'Salir ({usuario})' => '@@Saír ({usuario})@@',
+    'Desde un excel' => 'Desde un excel',
     'Advertencia' => 'Advertencia',
     'Apellidos' => 'Apelidos',
     'Campo' => 'Campo',
@@ -33,6 +32,7 @@ return [
     'Editar' => 'Editar',
     'El <b>DNI</b> de {socio} no tiene letra' => 'O <b>DNI</b> de {socio} non ten letra',
     'El <b>DNI</b> no tiene letra' => 'O <b>DNI</b> non ten letra',
+    'El <b>DNI</b> no tiene letra y debería ser la {letra}' => 'O <b>DNI</b> non ten letra e debería ser o {letra}',
     'El socio no se ha podido borrar' => 'Non foi posible borrar o socio',
     'El socio se ha borrado correctamente' => 'O socio foi borrado correctamente',
     'El socio se ha guardado correctamente' => 'O socio foi gardado correctamente',
@@ -45,6 +45,8 @@ return [
     'Errores' => 'Erros',
     'Errores en los socios' => 'Erros nos socios',
     'Ese socio no existe' => 'Ese socio non existe',
+    'Exportar' => 'Exportar',
+    'Exportar socios' => 'Exportar socios',
     'Falta algún dígito en el <b>DNI</b>' => 'Falta algún díxito no <b>DNI</b>',
     'Falta algún dígito en el <b>DNI</b> de {socio}' => 'Falta algún díxito no <b>DNI</b> de {socio}',
     'Fecha de alta' => 'Data de alta',
@@ -52,8 +54,7 @@ return [
     'Guardando...' => 'Gardando...',
     'Guardar' => 'Gardar',
     'Importar' => 'Importar',
-    'Importar socios' => 'Importar socio',
-    'Importar socios desde un excel' => 'Importar socio desde un excel',
+    'Importar socios' => 'Importar socios',
     'La letra del <b>DNI</b> de {socio} no es correcta' => 'A letra do <b>DNI</b> de {socio} non é correcta',
     'La letra del <b>DNI</b> es incorrecta' => 'A letra do <b>DNI</b> é incorrecta',
     'La letra del DNI debería ser {letra}' => 'A letra do DNI debería ser o {letra}',
@@ -74,6 +75,7 @@ return [
     'Nº Socio' => 'Nº Socio',
     'Nº de Socio' => 'Nº de Socio',
     'OK' => 'OK',
+    'Para newsletter' => 'Para newsletter',
     'Recuérdame' => 'Recórdame',
     'Salir' => 'Saír',
     'Sobra algún dígito en el <b>DNI</b>' => 'Sobra algún díxito no <b>DNI</b>',
@@ -91,4 +93,6 @@ return [
     '{socio} no tiene <b>apellidos</b>' => '{socio} non ten <b>apelidos</b>',
     '{socio} no tiene <b>nombre</b>' => '{socio} non ten <b>nome</b>',
     '¿Estás seguro de que quieres borrar este socio?' => 'Estás seguro de que queres borrar este socio?',
+    '¿Newsletter?' => 'Newsletter?',
+    '¿Quiere recibir la newsletter?' => 'Quere recibir a newsletter?',
 ];

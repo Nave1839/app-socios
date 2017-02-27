@@ -37,3 +37,7 @@ table .pull-right.btn-link,
 	height: 80vh;
 	overflow: hidden;
 }
+
+    .handsontable .htCheckboxRendererInput {
+        margin-top: 0;
+    }
