@@ -6,7 +6,7 @@
   <div class="col-xs-12">
     <div class="box">
       <div class="box-header">
-        <h3 class="box-title"><?= \Yii::t('app', 'Todos los socios'); ?></h3>
+        <h3 class="box-title"><?= \Yii::t('app', 'Todos los socios'); ?></h3>        
       </div>
       <!-- /.box-header -->
       <div class="box-body">
